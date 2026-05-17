@@ -114,7 +114,4 @@ jobs:
             --target-port $TARGET_PORT \
             --env-vars OPENAI_API_KEY=${{ secrets.OPENAI_API_KEY }} \
                        GEMINI_API_KEY=${{ secrets.GEMINI_API_KEY }} \
-                       LANGCHAIN_API_KEY=${{ secrets.LANGCHAIN_API_KEY }} \
-            --registry-server ${{ env.REGISTRY }} \
-            --registry-username ${{ github.actor }} \
-            --registry-password ${{ secrets.GITHUB_TOKEN }}
+                       LANGCHAIN_API_KEY=${{ secrets.LANGCHAIN_API_KEY }}
