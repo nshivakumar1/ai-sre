@@ -115,3 +115,27 @@ jobs:
             --env-vars OPENAI_API_KEY=${{ secrets.OPENAI_API_KEY }} \
                        GEMINI_API_KEY=${{ secrets.GEMINI_API_KEY }} \
                        LANGCHAIN_API_KEY=${{ secrets.LANGCHAIN_API_KEY }}
+
+  deploy-grafana:
+    name: Deploy Grafana Dashboard
+    runs-on: ubuntu-latest
+    needs: terraform-validate
+    if: github.ref == 'refs/heads/main'
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Azure Login
+        uses: azure/login@v2
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+          
+      - name: Deploy Grafana
+        run: |
+          echo "Deploying Grafana to Azure Container Apps..."
+          az containerapp up \
+            --name grafana-dashboard \
+            --resource-group rg-aisre-dev \
+            --environment cae-aisre-dev \
+            --image grafana/grafana-oss:latest \
+            --ingress external \
+            --target-port 3000

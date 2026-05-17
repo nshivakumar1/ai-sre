@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { config } from '../config';
 
 export default function Chatbot() {
   const [messages, setMessages] = useState([{ role: 'system', text: 'How can I help you today?' }]);
@@ -13,15 +14,16 @@ export default function Chatbot() {
     setLoading(true);
 
     try {
-      const response = await fetch('http://localhost:8006/chat', {
+      const response = await fetch(config.CHATBOT_URL, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ query: userMessage })
       });
+      if (!response.ok) throw new Error(`Chatbot API failed: ${response.status}`);
       const data = await response.json();
       setMessages(prev => [...prev, { role: 'system', text: data.reply }]);
     } catch (err) {
-      setMessages(prev => [...prev, { role: 'system', text: 'Error connecting to chatbot API.' }]);
+      setMessages(prev => [...prev, { role: 'system', text: 'Error connecting to chatbot API. Please ensure the backend is reachable.' }]);
     } finally {
       setLoading(false);
     }
