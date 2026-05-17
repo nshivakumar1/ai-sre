@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: alert-router
+  labels:
+    app: alert-router
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: alert-router
+  template:
+    metadata:
+      labels:
+        app: alert-router
+    spec:
+      containers:
+      - name: alert-router
+        image: ai-sre-alert-router:latest
+        imagePullPolicy: Never
+        ports:
+        - containerPort: 8001
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: alert-router
+spec:
+  type: ClusterIP
+  selector:
+    app: alert-router
+  ports:
+    - protocol: TCP
+      port: 8001
+      targetPort: 8001

@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ai-rca-engine
+  labels:
+    app: ai-rca-engine
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ai-rca-engine
+  template:
+    metadata:
+      labels:
+        app: ai-rca-engine
+    spec:
+      containers:
+      - name: ai-rca-engine
+        image: ai-sre-ai-rca-engine:latest
+        imagePullPolicy: Never
+        env:
+        - name: GEMINI_API_KEY
+          valueFrom:
+            secretKeyRef:
+              name: ai-sre-secrets
+              key: GEMINI_API_KEY
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: ai-rca-engine
+spec:
+  type: ClusterIP
+  selector:
+    app: ai-rca-engine
+  ports:
+    - protocol: TCP
+      port: 8002
+      targetPort: 8002

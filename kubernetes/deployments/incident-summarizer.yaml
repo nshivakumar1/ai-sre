@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: incident-summarizer
+  labels:
+    app: incident-summarizer
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: incident-summarizer
+  template:
+    metadata:
+      labels:
+        app: incident-summarizer
+    spec:
+      containers:
+      - name: incident-summarizer
+        image: ai-sre-incident-summarizer:latest
+        imagePullPolicy: Never
+        env:
+        - name: LANGCHAIN_API_KEY
+          valueFrom:
+            secretKeyRef:
+              name: ai-sre-secrets
+              key: LANGCHAIN_API_KEY
+        ports:
+        - containerPort: 8003
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: incident-summarizer
+spec:
+  type: ClusterIP
+  selector:
+    app: incident-summarizer
+  ports:
+    - protocol: TCP
+      port: 8003
+      targetPort: 8003
