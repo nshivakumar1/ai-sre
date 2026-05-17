@@ -139,8 +139,7 @@ jobs:
             --image grafana/grafana-oss:latest \
             --ingress external \
             --target-port 3000 \
-            --env-vars GF_SECURITY_ADMIN_PASSWORD=admin123 \
+            --env-vars GF_AUTH_ANONYMOUS_ENABLED=true \
+                       GF_AUTH_ANONYMOUS_ORG_ROLE=Admin \
                        GF_SERVER_DOMAIN=grafana-dashboard.agreeablepebble-45923bcd.centralindia.azurecontainerapps.io \
-                       GF_SERVER_ROOT_URL=https://grafana-dashboard.agreeablepebble-45923bcd.centralindia.azurecontainerapps.io/ \
-                       GF_SECURITY_COOKIE_SAMESITE=lax \
-                       GF_SECURITY_COOKIE_SECURE=true
+                       GF_SERVER_ROOT_URL=https://grafana-dashboard.agreeablepebble-45923bcd.centralindia.azurecontainerapps.io/
