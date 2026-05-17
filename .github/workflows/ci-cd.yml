@@ -82,6 +82,9 @@ jobs:
     runs-on: ubuntu-latest
     needs: build-and-push
     if: github.ref == 'refs/heads/main'
+    strategy:
+      matrix:
+        service: [ai-rca-engine, incident-summarizer, chatbot-api, alert-router, sre-copilot-ui]
     steps:
       - uses: actions/checkout@v4
       
