@@ -12,6 +12,10 @@ env:
   TERRAFORM_WORKING_DIR: 'infra/terraform'
   REGISTRY: 'ghcr.io'
 
+permissions:
+  contents: read
+  packages: write
+
 jobs:
   terraform-validate:
     name: Terraform Validate and Plan
