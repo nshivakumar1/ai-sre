@@ -138,4 +138,5 @@ jobs:
             --environment cae-aisre-dev \
             --image grafana/grafana-oss:latest \
             --ingress external \
-            --target-port 3000
+            --target-port 3000 \
+            --env-vars GF_SECURITY_ADMIN_PASSWORD=admin123
