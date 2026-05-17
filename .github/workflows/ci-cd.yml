@@ -142,4 +142,5 @@ jobs:
             --env-vars GF_SECURITY_ADMIN_PASSWORD=admin123 \
                        GF_SERVER_DOMAIN=grafana-dashboard.agreeablepebble-45923bcd.centralindia.azurecontainerapps.io \
                        GF_SERVER_ROOT_URL=https://grafana-dashboard.agreeablepebble-45923bcd.centralindia.azurecontainerapps.io/ \
-                       GF_SECURITY_COOKIE_SAMESITE=disabled
+                       GF_SECURITY_COOKIE_SAMESITE=lax \
+                       GF_SECURITY_COOKIE_SECURE=true
